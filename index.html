@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zahlenschätzspiel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+        }
+        #hinweis {
+            font-size: 18px;
+            color: red;
+        }
+        #ergebnis {
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Zahlenschätzspiel</h1>
+        <p>Ich habe mir eine Zahl zwischen 1 und 100 ausgedacht. Kannst du sie erraten?</p>
+        <input type="number" id="tipp" placeholder="Gib deine Zahl ein" min="1" max="100">
+        <button onclick="pruefeTipp()">Tipp abgeben</button>
+        <p id="hinweis"></p>
+        <p id="ergebnis"></p>
+    </div>
+
+    <script>
+        // Zufallszahl zwischen 1 und 100 generieren
+        const geheimzahl = Math.floor(Math.random() * 100) + 1;
+        let versuche = 0;
+
+        function pruefeTipp() {
+            const tipp = parseInt(document.getElementById("tipp").value);
+            const hinweis = document.getElementById("hinweis");
+            const ergebnis = document.getElementById("ergebnis");
+
+            // Zähler für Versuche erhöhen
+            versuche++;
+
+            if (isNaN(tipp) || tipp < 1 || tipp > 100) {
+                hinweis.textContent = "Bitte gib eine Zahl zwischen 1 und 100 ein.";
+                ergebnis.textContent = "";
+            } else if (tipp < geheimzahl) {
+                hinweis.textContent = "Die gesuchte Zahl ist größer!";
+                ergebnis.textContent = "";
+            } else if (tipp > geheimzahl) {
+                hinweis.textContent = "Die gesuchte Zahl ist kleiner!";
+                ergebnis.textContent = "";
+            } else {
+                ergebnis.textContent = `Herzlichen Glückwunsch! Du hast die Zahl ${geheimzahl} in ${versuche} Versuchen erraten!`;
+                hinweis.textContent = "";
+                // Spiel zurücksetzen
+                setTimeout(resetGame, 3000);
+            }
+        }
+
+        function resetGame() {
+            // Zufallszahl neu generieren und den Spielstatus zurücksetzen
+            geheimzahl = Math.floor(Math.random() * 100) + 1;
+            versuche = 0;
+            document.getElementById("tipp").value = "";
+            document.getElementById("hinweis").textContent = "";
+            document.getElementById("ergebnis").textContent = "";
+        }
+    </script>
+</body>
+</html>
