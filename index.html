@@ -46,7 +46,7 @@
 
     <script>
         // Zufallszahl zwischen 1 und 100 generieren
-        const geheimzahl = Math.floor(Math.random() * 100) + 1;
+        let geheimzahl = Math.floor(Math.random() * 100) + 1;
         let versuche = 0;
 
         function pruefeTipp() {
@@ -69,12 +69,13 @@
             } else {
                 ergebnis.textContent = `Herzlichen Glückwunsch! Du hast die Zahl ${geheimzahl} in ${versuche} Versuchen erraten!`;
                 hinweis.textContent = "";
-                // Spiel zurücksetzen
+                // Spiel zurücksetzen nach 3 Sekunden
                 setTimeout(resetGame, 3000);
             }
         }
-    </body>
-        { function resetGame()  // Zufallszahl neu generieren und den Spielstatus zurücksetzen
+
+        function resetGame() {
+            // Zufallszahl neu generieren und den Spielstatus zurücksetzen
             geheimzahl = Math.floor(Math.random() * 100) + 1;
             versuche = 0;
             document.getElementById("tipp").value = "";
